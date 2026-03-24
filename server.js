@@ -6,6 +6,9 @@ require('dotenv').config();
 
 const app = express();
 
+const requiredDbEnv = ['DB_HOST', 'DB_PORT', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'];
+const missingDbEnv = requiredDbEnv.filter((key) => !process.env[key]);
+
 // 1. MIDDLEWARE 
 // Essential for cross-origin requests and parsing form data
 app.use(cors());
@@ -110,6 +113,10 @@ const PORT = process.env.PORT || 10000;
 
 (async () => {
     try {
+        if (missingDbEnv.length > 0) {
+            throw new Error(`Missing database environment variables: ${missingDbEnv.join(', ')}`);
+        }
+
         await db.getConnection();
         await initializeDatabase();
 
@@ -124,7 +131,22 @@ const PORT = process.env.PORT || 10000;
     `);
         });
     } catch (error) {
-        console.error('[DB INIT ERROR]:', error.message);
+        console.error('[DB INIT ERROR]');
+        console.error('Message:', error?.message || '(no message)');
+        if (error?.code) {
+            console.error('Code:', error.code);
+        }
+        if (error?.errno) {
+            console.error('Errno:', error.errno);
+        }
+        if (error?.sqlMessage) {
+            console.error('SQL:', error.sqlMessage);
+        }
+        if (error?.stack) {
+            console.error(error.stack);
+        } else {
+            console.error(error);
+        }
         process.exit(1);
     }
 })();
