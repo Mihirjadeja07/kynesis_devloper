@@ -9,6 +9,7 @@ const typingStream = document.getElementById("typingStream");
 const form = document.getElementById("applicationForm");
 const formStatus = document.getElementById("formStatus");
 const pageName = body.dataset.page || "site";
+const topbar = document.querySelector(".topbar");
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -105,6 +106,10 @@ cycleTypingStream();
 window.setInterval(cycleTypingStream, 2400);
 
 if (commandToggle && commandPanel) {
+    if (topbar && commandToggle.parentElement !== topbar) {
+        topbar.appendChild(commandToggle.parentElement);
+    }
+
     commandToggle.addEventListener("click", () => {
         const isOpen = commandPanel.classList.toggle("open");
         body.classList.toggle("menu-open", isOpen);
@@ -114,6 +119,15 @@ if (commandToggle && commandPanel) {
 
     document.addEventListener("click", (event) => {
         if (!commandPanel.contains(event.target) && !commandToggle.contains(event.target)) {
+            commandPanel.classList.remove("open");
+            body.classList.remove("menu-open");
+            commandToggle.setAttribute("aria-expanded", "false");
+            commandPanel.setAttribute("aria-hidden", "true");
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
             commandPanel.classList.remove("open");
             body.classList.remove("menu-open");
             commandToggle.setAttribute("aria-expanded", "false");
