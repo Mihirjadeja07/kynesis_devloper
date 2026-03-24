@@ -165,7 +165,14 @@ if (form && formStatus) {
         const submitButton = form.querySelector(".submit-button");
         const payload = Object.fromEntries(new FormData(form).entries());
         const successLabel = form.dataset.successLabel || "Transmission complete";
-        const endpoint = form.dataset.endpoint || "api/apply.php";
+        const configuredEndpoint = form.dataset.endpoint;
+        const endpointCandidates = [];
+
+        if (configuredEndpoint) {
+            endpointCandidates.push(configuredEndpoint);
+        }
+
+        endpointCandidates.push("/api/apply", "api/apply.php");
 
         if (!payload.role && form.dataset.roleDefault) {
             payload.role = form.dataset.roleDefault;
@@ -179,21 +186,42 @@ if (form && formStatus) {
         formStatus.textContent = "Encrypting your payload and opening a secure channel.";
 
         try {
-            const response = await fetch(endpoint, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
+            let lastError = new Error("Transmission failed.");
+            let responseData = null;
 
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.message || "Transmission failed.");
+            for (const endpoint of [...new Set(endpointCandidates)]) {
+                try {
+                    const response = await fetch(endpoint, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const contentType = response.headers.get("content-type") || "";
+                    if (!contentType.includes("application/json")) {
+                        throw new Error(`Endpoint ${endpoint} returned non-JSON response.`);
+                    }
+
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.message || `Transmission failed via ${endpoint}.`);
+                    }
+
+                    responseData = data;
+                    break;
+                } catch (endpointError) {
+                    lastError = endpointError;
+                }
+            }
+
+            if (!responseData) {
+                throw lastError;
             }
 
             form.reset();
-            formStatus.textContent = `${successLabel}. Reference ID ${data.id}.`;
+            formStatus.textContent = `${successLabel}. Reference ID ${responseData.id}.`;
         } catch (error) {
             formStatus.textContent = error.message || "Connection to the backend could not be established.";
         } finally {
