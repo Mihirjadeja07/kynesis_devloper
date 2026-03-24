@@ -10,6 +10,12 @@ const form = document.getElementById("applicationForm");
 const formStatus = document.getElementById("formStatus");
 const pageName = body.dataset.page || "site";
 const topbar = document.querySelector(".topbar");
+const serviceModal = document.getElementById("serviceModal");
+const serviceModalTitle = document.getElementById("serviceModalTitle");
+const serviceModalCommand = document.getElementById("serviceModalCommand");
+const serviceModalSummary = document.getElementById("serviceModalSummary");
+const serviceModalList = document.getElementById("serviceModalList");
+const serviceModalClose = document.getElementById("serviceModalClose");
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -142,6 +148,62 @@ if (commandToggle && commandPanel) {
             commandToggle.setAttribute("aria-expanded", "false");
             commandPanel.setAttribute("aria-hidden", "true");
         });
+    });
+}
+
+if (serviceModal && serviceModalTitle && serviceModalCommand && serviceModalSummary && serviceModalList) {
+    const serviceTriggers = document.querySelectorAll(".service-detail-trigger");
+
+    const closeServiceModal = () => {
+        serviceModal.classList.remove("open");
+        serviceModal.setAttribute("aria-hidden", "true");
+        body.classList.remove("menu-open");
+    };
+
+    serviceTriggers.forEach((trigger) => {
+        const openServiceModal = () => {
+            serviceModalTitle.textContent = trigger.dataset.serviceTitle || "Service Module";
+            serviceModalCommand.textContent = trigger.dataset.serviceCommand || "[module]";
+            serviceModalSummary.textContent = trigger.dataset.serviceSummary || "";
+
+            const items = (trigger.dataset.serviceItems || "")
+                .split("|")
+                .map((item) => item.trim())
+                .filter(Boolean);
+
+            serviceModalList.innerHTML = "";
+            items.forEach((item) => {
+                const li = document.createElement("li");
+                li.textContent = item;
+                serviceModalList.appendChild(li);
+            });
+
+            serviceModal.classList.add("open");
+            serviceModal.setAttribute("aria-hidden", "false");
+            body.classList.add("menu-open");
+        };
+
+        trigger.addEventListener("click", openServiceModal);
+        trigger.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openServiceModal();
+            }
+        });
+    });
+
+    serviceModal.querySelectorAll("[data-service-close]").forEach((node) => {
+        node.addEventListener("click", closeServiceModal);
+    });
+
+    if (serviceModalClose) {
+        serviceModalClose.addEventListener("click", closeServiceModal);
+    }
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && serviceModal.classList.contains("open")) {
+            closeServiceModal();
+        }
     });
 }
 

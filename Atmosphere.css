@@ -583,10 +583,20 @@ main {
     padding: 1.45rem;
 }
 
+.service-detail-trigger {
+    cursor: pointer;
+}
+
 .service-card h3,
 .process-node h3 {
     font-size: 1.3rem;
     margin: 0.8rem 0;
+}
+
+.service-card:focus-visible,
+.service-modal-close:focus-visible {
+    outline: 1px solid rgba(198, 166, 106, 0.7);
+    outline-offset: 4px;
 }
 
 .service-card ul {
@@ -628,6 +638,79 @@ main {
     gap: 2rem;
     padding: 1.6rem;
     margin-top: 2.6rem;
+}
+
+.service-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 140;
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition);
+}
+
+.service-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.service-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.74);
+    backdrop-filter: blur(10px);
+}
+
+.service-modal-panel {
+    position: relative;
+    z-index: 1;
+    width: min(44rem, calc(100vw - 2rem));
+    padding: 1.5rem;
+    border-radius: 30px;
+}
+
+.service-modal-close {
+    margin-left: auto;
+    margin-bottom: 1rem;
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--platinum);
+}
+
+.service-modal-panel h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 0.95;
+    margin: 0.8rem 0 1rem;
+}
+
+.service-modal-summary {
+    color: var(--platinum-dim);
+    line-height: 1.8;
+}
+
+.service-modal-block {
+    margin-top: 1.4rem;
+}
+
+.service-modal-list {
+    display: grid;
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+    list-style: none;
+}
+
+.service-modal-list li {
+    padding: 0.9rem 1rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.84);
 }
 
 .contact-form {
@@ -848,6 +931,16 @@ main {
     .contact-shell {
         padding: 1rem;
         gap: 1.25rem;
+    }
+
+    .service-modal {
+        padding: 0.8rem;
+    }
+
+    .service-modal-panel {
+        width: calc(100vw - 1rem);
+        padding: 1.1rem;
+        border-radius: 22px;
     }
 
     .contact-form input,
