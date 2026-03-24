@@ -1,0 +1,12 @@
+CREATE DATABASE IF NOT EXISTS kynesis_db;
+USE kynesis_db;
+
+CREATE TABLE IF NOT EXISTS internship_applications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fullname VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    role VARCHAR(255) DEFAULT NULL,
+    github_url VARCHAR(512) DEFAULT NULL,
+    skills TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

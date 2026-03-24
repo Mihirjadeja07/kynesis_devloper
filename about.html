@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kynesis Developers | Architecture. Not just Code.</title>
+    <meta name="description" content="Learn the architecture-first philosophy and digital systems vision behind Kynesis Developers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Atmosphere.css">
+</head>
+<body data-page="about">
+    <div class="line-guides" aria-hidden="true"><span>01</span><span>08</span><span>16</span><span>24</span><span>32</span></div>
+    <div class="noise-layer" aria-hidden="true"></div>
+    <div class="cursor-shell" aria-hidden="true"><div class="cursor-dot"></div><div class="cursor-ring"></div></div>
+    <div class="command-menu-shell">
+        <button class="command-toggle magnetic" id="commandToggle" type="button" aria-expanded="false" aria-controls="commandPanel">
+            <span class="command-toggle-label">/open</span><span class="command-toggle-caption">Command Menu</span>
+        </button>
+        <aside class="command-panel" id="commandPanel" aria-hidden="true">
+            <div class="command-panel-bar"><span class="prompt-sigil">root@kynesis:~/about</span><span class="typing-stream" id="typingStream">loading system log...</span></div>
+            <nav class="command-nav">
+                <a class="magnetic" href="index.html">./home</a>
+                <a class="magnetic" href="about.html">./about</a>
+                <a class="magnetic" href="services.html">./services</a>
+                <a class="magnetic" href="process.html">./process</a>
+                <a class="magnetic" href="careers.html">./careers</a>
+                <a class="magnetic" href="contact.html">./contact</a>
+            </nav>
+        </aside>
+    </div>
+    <header class="topbar">
+        <a class="brand magnetic" href="index.html"><span class="brand-mark"></span><span class="brand-copy"><strong>Kynesis Developers</strong><small>The Architect of Logic</small></span></a>
+        <div class="topbar-meta"><span>Architecture Layer</span><span>Version 1.0</span></div>
+    </header>
+    <main>
+        <section class="page-shell">
+            <div class="hero-canvas-wrap page-canvas">
+                <canvas id="heroCanvas" aria-label="Interactive coding network"></canvas>
+                <div class="hero-vignette"></div>
+            </div>
+            <section class="page-header reveal">
+                <p class="eyebrow">SYSTEM_LOG [VERSION 1.0]</p>
+                <h1>Architecture. Not just Code.</h1>
+            </section>
+            <section class="content-grid">
+                <article class="content-panel glass-panel reveal">
+                    <p class="panel-label">Origin</p>
+                    <div class="panel-code stacked">
+                        <span>ORIGIN: founded 2023.</span>
+                        <span>kynesis.dev/origins</span>
+                    </div>
+                </article>
+                <article class="content-panel glass-panel reveal">
+                    <p class="panel-label">Mission</p>
+                    <p class="section-copy">We integrate kinetic energy into software architecture. Our team does not just write functions; we design interconnected data ecosystems that feel disciplined, scalable, and alive.</p>
+                </article>
+                <article class="content-panel glass-panel reveal">
+                    <p class="panel-label">Vision</p>
+                    <p class="section-copy">Kynesis Developers aims to become the standard for digital connectivity, resilient system architecture, and high-performance automation across product, infrastructure, and interface layers.</p>
+                </article>
+                <article class="content-panel glass-panel reveal">
+                    <p class="panel-label">Tags</p>
+                    <div class="tag-row">
+                        <span>[PERFORMANCE]</span>
+                        <span>[SCALE]</span>
+                        <span>[ARCHITECTURE]</span>
+                    </div>
+                </article>
+            </section>
+        </section>
+    </main>
+    <footer class="footer"><p>Kynesis Developers</p><p>System log synchronized.</p></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="Kinetic-Engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kynesis Developers | Architect for your future.</title>
+    <meta name="description" content="Explore careers and internship pathways at Kynesis Developers for CSE, IT, and CE students.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Atmosphere.css">
+</head>
+<body data-page="careers">
+    <div class="line-guides" aria-hidden="true"><span>01</span><span>08</span><span>16</span><span>24</span><span>32</span></div>
+    <div class="noise-layer" aria-hidden="true"></div>
+    <div class="cursor-shell" aria-hidden="true"><div class="cursor-dot"></div><div class="cursor-ring"></div></div>
+    <div class="command-menu-shell">
+        <button class="command-toggle magnetic" id="commandToggle" type="button" aria-expanded="false" aria-controls="commandPanel"><span class="command-toggle-label">/open</span><span class="command-toggle-caption">Command Menu</span></button>
+        <aside class="command-panel" id="commandPanel" aria-hidden="true">
+            <div class="command-panel-bar"><span class="prompt-sigil">root@kynesis:~/home/interns</span><span class="typing-stream" id="typingStream">new data points welcomed...</span></div>
+            <nav class="command-nav">
+                <a class="magnetic" href="index.html">./home</a>
+                <a class="magnetic" href="about.html">./about</a>
+                <a class="magnetic" href="services.html">./services</a>
+                <a class="magnetic" href="process.html">./process</a>
+                <a class="magnetic" href="careers.html">./careers</a>
+                <a class="magnetic" href="contact.html">./contact</a>
+            </nav>
+        </aside>
+    </div>
+    <header class="topbar">
+        <a class="brand magnetic" href="index.html"><span class="brand-mark"></span><span class="brand-copy"><strong>Kynesis Developers</strong><small>The Architect of Logic</small></span></a>
+        <div class="topbar-meta"><span>Careers Portal</span><span>CSE / IT / CE</span></div>
+    </header>
+    <main>
+        <section class="page-shell">
+            <div class="hero-canvas-wrap page-canvas">
+                <canvas id="heroCanvas" aria-label="Interactive coding network"></canvas>
+                <div class="hero-vignette"></div>
+            </div>
+            <section class="page-header reveal">
+                <p class="eyebrow">ROOT@KYNESIS:~/home/interns$ NEW DATA POINTS WELCOMED.</p>
+                <h1>Architect for your future.</h1>
+                <p class="hero-copy narrow">
+                    We seek ambitious nodes from CSE, IT, and CE academic systems. You will not fetch coffee. You will push code to production. We transform students into System Architects.
+                </p>
+            </section>
+            <section class="content-grid">
+                <article class="content-panel glass-panel reveal">
+                    <p class="panel-label">Application Interface</p>
+                    <div class="panel-code">
+                        <span>[ Application_Entry_Point ]</span>
+                        <span>LIVE / READY / REVIEWED</span>
+                    </div>
+                </article>
+                <article class="content-panel glass-panel reveal">
+                    <p class="panel-label">Mission Fit</p>
+                    <div class="tag-row">
+                        <span>[CSE]</span>
+                        <span>[IT]</span>
+                        <span>[CE]</span>
+                    </div>
+                </article>
+            </section>
+            <section class="contact-shell glass-panel reveal">
+                <div class="contact-copy">
+                    <p class="section-kicker">Careers Intake</p>
+                    <h2>Enter the build pipeline.</h2>
+                    <p>Send your technical profile, role interest, and links. We use this intake to identify engineers who want exposure to real systems, not simulated work.</p>
+                </div>
+                <form class="contact-form site-form" id="applicationForm" data-endpoint="api/apply.php" data-success-label="Application logged">
+                    <label><span>Candidate Name</span><input class="magnetic" type="text" name="name" placeholder="Your name" required></label>
+                    <label><span>Email Address</span><input class="magnetic" type="email" name="email" placeholder="you@example.com" required></label>
+                    <label><span>Desired Role</span><input class="magnetic" type="text" name="role" placeholder="Frontend / Backend / AI / Security" required></label>
+                    <label><span>GitHub / Portfolio</span><input class="magnetic" type="url" name="github" placeholder="https://github.com/..."></label>
+                    <label class="full-span"><span>Technical Stack</span><textarea class="magnetic" name="skills" rows="5" placeholder="Projects, tools, coursework, and what you want to ship."></textarea></label>
+                    <button class="primary-link magnetic submit-button" type="submit">Transmit Application</button>
+                    <p class="form-status" id="formStatus" aria-live="polite"></p>
+                </form>
+            </section>
+        </section>
+    </main>
+    <footer class="footer"><p>Kynesis Developers</p><p>Candidate intake active.</p></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="Kinetic-Engine.js"></script>
+</body>
+</html>

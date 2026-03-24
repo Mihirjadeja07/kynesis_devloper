@@ -3,770 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kynesis Developers | Engineering the Future</title>
-    
-    <meta name="description" content="Kynesis Developers - Ultra-premium software solutions in Cybersecurity, AI, and Full-Stack Development.">
+    <title>Kynesis Developers | Welcome to the Kynesis Network</title>
+    <meta name="description" content="Kynesis Developers is a premium software engineering firm designing architecture-driven digital systems, services, and careers.">
     <meta name="author" content="Mihirsinh Jadeja">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <style>
-        /* ========================================
-           1. CSS VARIABLES & THEMING
-           ========================================
-        */
-        :root {
-            --bg: #030303;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-hover: rgba(255, 255, 255, 0.06);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --accent: #00D1FF; 
-            --accent-glow: rgba(0, 209, 255, 0.3);
-            --selection: rgba(0, 209, 255, 0.3);
-            --header-blur: rgba(3, 3, 3, 0.8);
-            --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        [data-theme="light"] {
-            --bg: #f9f9fb;
-            --glass: rgba(0, 0, 0, 0.02);
-            --glass-hover: rgba(0, 0, 0, 0.04);
-            --glass-border: rgba(0, 0, 0, 0.1);
-            --text-primary: #121212;
-            --text-secondary: #555555;
-            --accent: #0066ff; 
-            --accent-glow: rgba(0, 102, 255, 0.15);
-            --header-blur: rgba(249, 249, 251, 0.8);
-            --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* ========================================
-           2. RESET & BASE STYLES
-           ========================================
-        */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: none !important; /* Managed by JS Cursor */
-            scroll-behavior: smooth;
-        }
-
-        ::selection { background: var(--selection); color: var(--text-primary); }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: background-color 0.5s ease;
-        }
-
-        /* ========================================
-           3. CUSTOM CURSOR
-           ========================================
-        */
-        #cursor-dot {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transform: translate(-50%, -50%);
-        }
-
-        #cursor-ring {
-            position: fixed;
-            width: 35px;
-            height: 35px;
-            border: 1.5px solid var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background 0.3s, border 0.3s;
-        }
-
-        /* ========================================
-           4. LAYOUT COMPONENTS
-           ========================================
-        */
-        #canvas-container {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100vh;
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        header {
-            position: fixed;
-            top: 0; width: 100%;
-            padding: 1.25rem 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(20px);
-            background: var(--header-blur);
-            border-bottom: 1px solid var(--glass-border);
-            z-index: 5000;
-        }
-
-        .logo-wrap {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(90deg, var(--text-primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        nav ul {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-        }
-
-        nav a:hover { color: var(--accent); }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .action-link {
-            color: var(--text-secondary);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-        }
-
-        .action-link:hover {
-            color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        /* ========================================
-           5. HERO SECTION
-           ========================================
-        */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 10%;
-        }
-
-        .hero-badge {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 6px 15px;
-            border-radius: 50px;
-            margin-bottom: 2rem;
-            background: var(--accent-glow);
-            text-transform: uppercase;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 10vw, 7rem);
-            font-weight: 800;
-            line-height: 0.95;
-            letter-spacing: -4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 650px;
-            margin-bottom: 3rem;
-        }
-
-        /* ========================================
-           6. SERVICES (12+ ITEMS)
-           ========================================
-        */
-        .section-container {
-            padding: 100px 8%;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            padding: 3rem 2.5rem;
-            border-radius: 24px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            background: var(--glass-hover);
-            border-color: var(--accent);
-            transform: translateY(-10px);
-            box-shadow: var(--card-shadow);
-        }
-
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* ========================================
-           7. INTERNSHIP FORM
-           ========================================
-        */
-        .internship-wrap {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            padding: 4rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .full-width { grid-column: span 2; }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .input-group label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-        }
-
-        input, textarea {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--glass-border);
-            padding: 1.2rem;
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .submit-btn {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 1.2rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 1rem;
-        }
-
-        .submit-btn:hover {
-            filter: brightness(1.1);
-            transform: scale(1.02);
-        }
-
-        /* ========================================
-           8. FOOTER
-           ========================================
-        */
-        footer {
-            background: var(--glass);
-            border-top: 1px solid var(--glass-border);
-            padding: 80px 8% 40px;
-            margin-top: 100px;
-        }
-
-        .footer-main {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-
-        .footer-brand p {
-            color: var(--text-secondary);
-            margin: 20px 0;
-            max-width: 320px;
-        }
-
-        .footer-col h4 {
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent);
-        }
-
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 12px; }
-        .footer-col ul li a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            transition: var(--transition);
-        }
-
-        .footer-col ul li a:hover { color: var(--accent); padding-left: 5px; }
-
-        .footer-bottom {
-            padding-top: 40px;
-            border-top: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        /* ========================================
-           9. RESPONSIVE DESIGN
-           ========================================
-        */
-        @media (max-width: 992px) {
-            .footer-main { grid-template-columns: 1fr 1fr; }
-            .hero h1 { font-size: 4rem; }
-            .form-grid { grid-template-columns: 1fr; }
-            .full-width { grid-column: span 1; }
-        }
-
-        @media (max-width: 768px) {
-            nav { display: none; }
-            header { padding: 1.5rem 8%; }
-            .section-container { padding: 60px 8%; }
-            .internship-wrap { padding: 2rem; }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Atmosphere.css">
 </head>
-<body data-theme="dark">
+<body data-page="home">
+    <div class="line-guides" aria-hidden="true">
+        <span>01</span>
+        <span>08</span>
+        <span>16</span>
+        <span>24</span>
+        <span>32</span>
+    </div>
+    <div class="noise-layer" aria-hidden="true"></div>
+    <div class="cursor-shell" aria-hidden="true">
+        <div class="cursor-dot"></div>
+        <div class="cursor-ring"></div>
+    </div>
 
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
-    <div id="canvas-container"></div>
-
-    <header>
-        <div class="logo-wrap">
-            <div class="logo-text">KYNESIS</div>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#services" class="hover-target">Services</a></li>
-                <li><a href="#internship" class="hover-target">Internship</a></li>
-                <li><a href="https://github.com/Mihirjadeja07" target="_blank" class="hover-target">GitHub</a></li>
-            </ul>
-        </nav>
-        <div class="header-actions">
-            <a href="https://linkedin.com/in/mihirsinh-jadeja" target="_blank" class="action-link hover-target"><i data-lucide="linkedin"></i></a>
-            <a href="mailto:mihir@kynesisdevloper.com" class="action-link hover-target"><i data-lucide="mail"></i></a>
-            <div id="theme-toggle" class="action-link hover-target" style="cursor:pointer">
-                <i data-lucide="sun" id="theme-icon"></i>
+    <div class="command-menu-shell">
+        <button class="command-toggle magnetic" id="commandToggle" type="button" aria-expanded="false" aria-controls="commandPanel">
+            <span class="command-toggle-label">/open</span>
+            <span class="command-toggle-caption">Command Menu</span>
+        </button>
+        <aside class="command-panel" id="commandPanel" aria-hidden="true">
+            <div class="command-panel-bar">
+                <span class="prompt-sigil">root@kynesis:~/home</span>
+                <span class="typing-stream" id="typingStream">initializing network shell...</span>
             </div>
+            <nav class="command-nav">
+                <a class="magnetic" href="index.html">./home</a>
+                <a class="magnetic" href="about.html">./about</a>
+                <a class="magnetic" href="services.html">./services</a>
+                <a class="magnetic" href="process.html">./process</a>
+                <a class="magnetic" href="careers.html">./careers</a>
+                <a class="magnetic" href="contact.html">./contact</a>
+            </nav>
+        </aside>
+    </div>
+
+    <header class="topbar">
+        <a class="brand magnetic" href="index.html" aria-label="Kynesis Developers home">
+            <span class="brand-mark"></span>
+            <span class="brand-copy">
+                <strong>Kynesis Developers</strong>
+                <small>The Architect of Logic</small>
+            </span>
+        </a>
+        <div class="topbar-meta">
+            <span>Obsidian / Platinum Edition</span>
+            <span>Digital Coding Terminal</span>
         </div>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="hero-badge">Architecting Innovation</div>
-            <h1>Build. Scale.<br>Dominate.</h1>
-            <p>High-end engineering solutions across the modern tech stack. We bridge the gap between complex infrastructure and premium user experiences.</p>
-        </section>
-
-        <section id="services" class="section-container">
-            <div class="section-header">
-                <h2>Our Ecosystem</h2>
-                <p style="color:var(--text-secondary)">End-to-end expertise across all computer science domains.</p>
+        <section class="hero page-hero" id="hero">
+            <div class="hero-canvas-wrap">
+                <canvas id="heroCanvas" aria-label="Interactive coding network"></canvas>
+                <div class="hero-vignette"></div>
             </div>
-            <div class="services-grid">
-                <div class="card hover-target">
-                    <i data-lucide="shield-check" class="card-icon"></i>
-                    <h3>Cybersecurity</h3>
-                    <p>Digital forensics, vulnerability assessments, and advanced phishing detection systems.</p>
+            <div class="hero-content">
+                <p class="eyebrow">ROOT@KYNESIS:~/home$ INIT_SESSION... [SUCCESS]</p>
+                <h1>Welcome to the Kynesis Network.</h1>
+                <p class="hero-copy">
+                    Architecture-first engineering surfaces for organizations that want systems to feel precise,
+                    immersive, and inevitable. Every page behaves like a living terminal stitched into a digital mesh.
+                </p>
+                <div class="hero-actions">
+                    <a class="primary-link magnetic" href="services.html">Open Services Console</a>
+                    <a class="secondary-link magnetic" href="careers.html">Enter Careers Portal</a>
                 </div>
-                <div class="card hover-target">
-                    <i data-lucide="brain-circuit" class="card-icon"></i>
-                    <h3>AI & ML</h3>
-                    <p>Neural networks, predictive modeling, and automated data classification engines.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="bar-chart-3" class="card-icon"></i>
-                    <h3>Data Analytics</h3>
-                    <p>Enterprise visualization using Power BI and Microsoft Fabric data pipelines.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="layers" class="card-icon"></i>
-                    <h3>Full-Stack Dev</h3>
-                    <p>Scalable web applications built with Next.js, React, and high-performance backends.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="container" class="card-icon"></i>
-                    <h3>DevOps (Docker)</h3>
-                    <p>Containerized orchestration, CI/CD automation, and cloud-native infrastructure.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="cpu" class="card-icon"></i>
-                    <h3>Embedded Systems</h3>
-                    <p>IoT integration and low-level firmware development for smart hardware.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="link" class="card-icon"></i>
-                    <h3>Blockchain</h3>
-                    <p>Smart contract development and decentralized application architecture.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="search" class="card-icon"></i>
-                    <h3>Technical SEO</h3>
-                    <p>Algorithmic optimization and organic growth strategies for complex platforms.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="database" class="card-icon"></i>
-                    <h3>Cloud Architecture</h3>
-                    <p>Secure database management and serverless computing solutions.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="smartphone" class="card-icon"></i>
-                    <h3>Mobile Apps</h3>
-                    <p>Cross-platform mobile experiences with native-level performance.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="globe" class="card-icon"></i>
-                    <h3>Domain Management</h3>
-                    <p>Global hosting, DNS optimization, and enterprise domain services.</p>
-                </div>
-                <div class="card hover-target">
-                    <i data-lucide="settings" class="card-icon"></i>
-                    <h3>SaaS Consultation</h3>
-                    <p>Business-driven software architecture and digital transformation roadmaps.</p>
+                <div class="hero-metrics glass-panel reveal">
+                    <article>
+                        <span class="metric-value">06</span>
+                        <span class="metric-label">Core navigation nodes</span>
+                    </article>
+                    <article>
+                        <span class="metric-value">12</span>
+                        <span class="metric-label">Service modules</span>
+                    </article>
+                    <article>
+                        <span class="metric-value">LIVE</span>
+                        <span class="metric-label">Immersive interface state</span>
+                    </article>
                 </div>
             </div>
-        </section>
-
-        <section id="internship" class="section-container">
-            <div class="internship-wrap">
-                <div style="text-align: center; margin-bottom: 3rem;">
-                    <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Join the Network</h2>
-                    <p style="color:var(--text-secondary)">Apply for specialized internships in cutting-edge tech.</p>
+            <div class="hero-sidepanel glass-panel reveal">
+                <p class="panel-label">Directory Access</p>
+                <div class="panel-code">
+                    <a class="terminal-link magnetic" href="about.html">[ ./ABOUT_US ]</a>
+                    <a class="terminal-link magnetic" href="services.html">[ ./SERVICES_CONSOLE ]</a>
+                    <a class="terminal-link magnetic" href="process.html">[ ./PORTFOLIO_MESH ]</a>
+                    <a class="terminal-link magnetic" href="careers.html">[ ./CAREERS_PORTAL ]</a>
                 </div>
-                <form id="applicationForm">
-                    <div class="form-grid">
-                        <div class="input-group">
-                            <label>Full Name</label>
-                            <input type="text" name="name" placeholder="John Doe" required>
-                        </div>
-                        <div class="input-group">
-                            <label>Email Address</label>
-                            <input type="email" name="email" placeholder="john@example.com" required>
-                        </div>
-                        <div class="input-group">
-                            <label>Desired Role</label>
-                            <input type="text" name="role" placeholder="e.g. Cybersecurity Research" required>
-                        </div>
-                        <div class="input-group">
-                            <label>GitHub Profile</label>
-                            <input type="url" name="github" placeholder="https://github.com/...">
-                        </div>
-                        <div class="input-group full-width">
-                            <label>Technical Stack & Experience</label>
-                            <textarea name="skills" rows="5" placeholder="List your projects, tools, and expertise..."></textarea>
-                        </div>
-                    </div>
-                    <button type="submit" class="submit-btn hover-target">SUBMIT APPLICATION</button>
-                </form>
+                <p class="panel-note">
+                    A luminous packet traverses the node mesh behind the interface while the cursor field bends nearby syntax and signal filaments.
+                </p>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="footer-main">
-            <div class="footer-brand">
-                <div class="logo-text">KYNESIS</div>
-                <p>Developing the digital standards of tomorrow through elite engineering and futuristic design.</p>
-                <div style="display:flex; gap:15px; margin-top:20px;">
-                    <a href="https://github.com/Mihirjadeja07" class="action-link hover-target"><i data-lucide="github"></i></a>
-                    <a href="https://linkedin.com/in/mihirsinh-jadeja" class="action-link hover-target"><i data-lucide="linkedin"></i></a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>Services</h4>
-                <ul>
-                    <li><a href="#" class="hover-target">Cybersecurity</a></li>
-                    <li><a href="#" class="hover-target">AI/ML Solutions</a></li>
-                    <li><a href="#" class="hover-target">Web Architecture</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#" class="hover-target">About Us</a></li>
-                    <li><a href="#" class="hover-target">Network</a></li>
-                    <li><a href="#" class="hover-target">Internships</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="#" class="hover-target">Privacy</a></li>
-                    <li><a href="#" class="hover-target">Terms</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; <span id="year"></span> Kynesis Developers. All rights reserved.</p>
-            <p>Designed by Mihirsinh Jadeja</p>
-        </div>
+    <footer class="footer">
+        <p>Kynesis Developers</p>
+        <p>Node mesh active. Session maintained.</p>
     </footer>
 
-    <script>
-        /* ========================================
-           1. INITIALIZATION
-           ========================================
-        */
-        lucide.createIcons();
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        /* ========================================
-           2. CURSOR ENGINE
-           ========================================
-        */
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-        let mouseX = 0, mouseY = 0;
-        let ringX = 0, ringY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.left = mouseX + 'px';
-            dot.style.top = mouseY + 'px';
-        });
-
-        function animateCursor() {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            ring.style.left = ringX + 'px';
-            ring.style.top = ringY + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // Magnetic Effect
-        document.querySelectorAll('.hover-target').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                ring.style.width = '70px';
-                ring.style.height = '70px';
-                ring.style.background = 'var(--accent-glow)';
-                ring.style.borderColor = 'transparent';
-            });
-            item.addEventListener('mouseleave', () => {
-                ring.style.width = '35px';
-                ring.style.height = '35px';
-                ring.style.background = 'transparent';
-                ring.style.borderColor = 'var(--accent)';
-            });
-        });
-
-        /* ========================================
-           3. THEME ENGINE
-           ========================================
-        */
-        const themeToggle = document.getElementById('theme-toggle');
-        const body = document.body;
-        const themeIcon = document.getElementById('theme-icon');
-
-        themeToggle.addEventListener('click', () => {
-            const isDark = body.getAttribute('data-theme') === 'dark';
-            const newTheme = isDark ? 'light' : 'dark';
-            body.setAttribute('data-theme', newTheme);
-            themeIcon.setAttribute('data-lucide', isDark ? 'moon' : 'sun');
-            lucide.createIcons();
-            
-            // Update 3D Object Colors
-            if (isDark) {
-                torusMaterial.color.setHex(0x0066ff);
-            } else {
-                torusMaterial.color.setHex(0x00D1FF);
-            }
-        });
-
-        /* ========================================
-           4. THREE.JS 3D BACKGROUND
-           ========================================
-        */
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        const torusGeometry = new THREE.TorusKnotGeometry(12, 3, 150, 20);
-        const torusMaterial = new THREE.MeshPhongMaterial({ 
-            color: 0x00D1FF, 
-            wireframe: true,
-            transparent: true,
-            opacity: 0.5
-        });
-        const torusKnot = new THREE.Mesh(torusGeometry, torusMaterial);
-        scene.add(torusKnot);
-
-        const pLight = new THREE.PointLight(0xffffff, 1.5, 100);
-        pLight.position.set(20, 20, 20);
-        scene.add(pLight);
-
-        const aLight = new THREE.AmbientLight(0xffffff, 0.3);
-        scene.add(aLight);
-
-        camera.position.z = 40;
-
-        function renderScene() {
-            requestAnimationFrame(renderScene);
-            torusKnot.rotation.x += 0.002;
-            torusKnot.rotation.y += 0.002;
-            renderer.render(scene, camera);
-        }
-        renderScene();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        /* ========================================
-           5. FORM LOGIC (SQL INTEGRATION READY)
-           ========================================
-        */
-        const applicationForm = document.getElementById('applicationForm');
-
-       applicationForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const submitBtn = e.target.querySelector('.submit-btn');
-    submitBtn.textContent = "UPLOADING TO DATABASE...";
-    submitBtn.disabled = true;
-
-    const formData = new FormData(applicationForm);
-    const payload = Object.fromEntries(formData.entries());
-
-    try {
-        const response = await fetch('http://localhost:5000/api/apply', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            alert("Success! Your application ID is: " + data.id);
-            applicationForm.reset();
-        } else {
-            alert("Server Error: " + data.message);
-        }
-    } catch (error) {
-        console.error("Connection Refused:", error);
-        alert("Failed to connect to the backend server.");
-    } finally {
-        submitBtn.textContent = "SUBMIT APPLICATION";
-        submitBtn.disabled = false;
-    }
-});
-
-        /* ========================================
-           6. SCROLL ANIMATIONS (SUBTLE)
-           ========================================
-        */
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.opacity = "0";
-            card.style.transform = "translateY(30px)";
-            card.style.transition = "all 0.8s ease-out";
-            observer.observe(card);
-        });
-
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="Kinetic-Engine.js"></script>
 </body>
 </html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kynesis Developers | The Architecture Cycle</title>
+    <meta name="description" content="See how Kynesis Developers transforms requirements into deployed systems through a structured architecture cycle.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Atmosphere.css">
+</head>
+<body data-page="process">
+    <div class="line-guides" aria-hidden="true"><span>01</span><span>08</span><span>16</span><span>24</span><span>32</span></div>
+    <div class="noise-layer" aria-hidden="true"></div>
+    <div class="cursor-shell" aria-hidden="true"><div class="cursor-dot"></div><div class="cursor-ring"></div></div>
+    <div class="command-menu-shell">
+        <button class="command-toggle magnetic" id="commandToggle" type="button" aria-expanded="false" aria-controls="commandPanel"><span class="command-toggle-label">/open</span><span class="command-toggle-caption">Command Menu</span></button>
+        <aside class="command-panel" id="commandPanel" aria-hidden="true">
+            <div class="command-panel-bar"><span class="prompt-sigil">root@kynesis:~/cycle</span><span class="typing-stream" id="typingStream">running optimization pipeline...</span></div>
+            <nav class="command-nav">
+                <a class="magnetic" href="index.html">./home</a>
+                <a class="magnetic" href="about.html">./about</a>
+                <a class="magnetic" href="services.html">./services</a>
+                <a class="magnetic" href="process.html">./process</a>
+                <a class="magnetic" href="careers.html">./careers</a>
+                <a class="magnetic" href="contact.html">./contact</a>
+            </nav>
+        </aside>
+    </div>
+    <header class="topbar">
+        <a class="brand magnetic" href="index.html"><span class="brand-mark"></span><span class="brand-copy"><strong>Kynesis Developers</strong><small>The Architect of Logic</small></span></a>
+        <div class="topbar-meta"><span>Process Mesh</span><span>5-step cycle</span></div>
+    </header>
+    <main>
+        <section class="page-shell">
+            <div class="hero-canvas-wrap page-canvas">
+                <canvas id="heroCanvas" aria-label="Interactive coding network"></canvas>
+                <div class="hero-vignette"></div>
+            </div>
+            <section class="page-header reveal">
+                <p class="eyebrow">ROOT@KYNESIS:~/cycle$ RUNNING OPTIMIZATION PIPELINE...</p>
+                <h1>The Architecture Cycle.</h1>
+            </section>
+            <section class="process-track reveal">
+                <article class="process-node glass-panel reveal magnetic"><span class="service-index">01</span><h3>[INPUT: Requirements]</h3><p>We convert goals, constraints, and urgency into a clear system brief.</p></article>
+                <article class="process-node glass-panel reveal magnetic"><span class="service-index">02</span><h3>[PLANNING_MESH]</h3><p>Architecture mapping, risk surfacing, and technical sequencing align delivery.</p></article>
+                <article class="process-node glass-panel reveal magnetic"><span class="service-index">03</span><h3>[SYNTHESIS: Dev/Design]</h3><p>Interface, code, and infrastructure evolve together as one surface.</p></article>
+                <article class="process-node glass-panel reveal magnetic"><span class="service-index">04</span><h3>[VALIDATION: Test/Optimize]</h3><p>We harden behavior, tune performance, and remove friction before launch.</p></article>
+                <article class="process-node glass-panel reveal magnetic"><span class="service-index">05</span><h3>[OUTPUT: Deploy/Support]</h3><p>Delivery extends into support, iteration, and long-term operational confidence.</p></article>
+            </section>
+        </section>
+    </main>
+    <footer class="footer"><p>Kynesis Developers</p><p>Pipeline execution complete.</p></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="Kinetic-Engine.js"></script>
+</body>
+</html>
