@@ -396,6 +396,10 @@ main {
     gap: 1rem;
 }
 
+.section-heading.compact {
+    max-width: 52rem;
+}
+
 .page-header h1,
 .module-heading h2,
 .contact-copy h2 {
@@ -565,9 +569,69 @@ main {
     gap: 1.4rem;
 }
 
+.section-block {
+    width: min(var(--max-width), calc(100% - 4rem));
+    margin: 0 auto;
+    padding: 0 0 4rem;
+}
+
 .content-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 2.4rem;
+}
+
+.info-grid {
+    display: grid;
+    gap: 1.4rem;
+    margin-top: 2rem;
+}
+
+.tri-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.feature-showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: 1.4rem;
+    margin-top: 2rem;
+}
+
+.feature-primary,
+.cta-shell {
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+}
+
+.feature-primary h2,
+.cta-shell h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 0.95;
+    margin: 0.9rem 0 1rem;
+}
+
+.feature-primary p,
+.cta-shell p {
+    color: var(--platinum-dim);
+    line-height: 1.75;
+}
+
+.feature-stack {
+    display: grid;
+    gap: 1.4rem;
+}
+
+.content-panel h3 {
+    font-size: 1.22rem;
+    margin: 0.6rem 0 0.8rem;
+}
+
+.cta-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2rem;
+    align-items: center;
 }
 
 .service-grid {
@@ -799,7 +863,10 @@ main {
     .contact-shell,
     .content-grid,
     .service-grid.dense,
-    .process-track {
+    .process-track,
+    .tri-grid,
+    .feature-showcase,
+    .cta-shell {
         grid-template-columns: 1fr;
     }
 }
@@ -856,6 +923,7 @@ main {
 
     .hero,
     .page-shell,
+    .section-block,
     .footer {
         width: min(calc(100% - 1.5rem), var(--max-width));
     }
@@ -997,6 +1065,7 @@ main {
 
     .hero,
     .page-shell,
+    .section-block,
     .footer {
         width: calc(100% - 1rem);
     }
