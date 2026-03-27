@@ -1,3 +1,4 @@
+const root = document.documentElement;
 const body = document.body;
 const cursorShell = document.querySelector(".cursor-shell");
 const cursorDot = document.querySelector(".cursor-dot");
@@ -5,6 +6,9 @@ const cursorRing = document.querySelector(".cursor-ring");
 const magneticNodes = document.querySelectorAll(".magnetic");
 const commandToggle = document.getElementById("commandToggle");
 const commandPanel = document.getElementById("commandPanel");
+const themeToggle = document.getElementById("themeToggle");
+const themeToggleValue = document.getElementById("themeToggleValue");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const typingStream = document.getElementById("typingStream");
 const form = document.getElementById("applicationForm");
 const formStatus = document.getElementById("formStatus");
@@ -17,12 +21,72 @@ const serviceModalSummary = document.getElementById("serviceModalSummary");
 const serviceModalList = document.getElementById("serviceModalList");
 const serviceModalClose = document.getElementById("serviceModalClose");
 
+const themeStorageKey = "kynesis-theme";
+const systemThemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 let pointerX = window.innerWidth * 0.5;
 let pointerY = window.innerHeight * 0.5;
 let ringX = pointerX;
 let ringY = pointerY;
+
+function getCurrentTheme() {
+    return root.dataset.theme === "dark" ? "dark" : "light";
+}
+
+function syncThemeControls(theme) {
+    body.dataset.theme = theme;
+
+    if (themeToggle) {
+        const currentThemeLabel = theme === "dark" ? "Dark Mode" : "Light Mode";
+        themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+        themeToggle.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
+        if (themeToggleValue) {
+            themeToggleValue.textContent = currentThemeLabel;
+        }
+    }
+
+    if (themeColorMeta) {
+        themeColorMeta.setAttribute("content", theme === "dark" ? "#06070b" : "#fff9f4");
+    }
+}
+
+function setTheme(theme, { persist = true, emit = true } = {}) {
+    root.dataset.theme = theme;
+    syncThemeControls(theme);
+
+    if (persist) {
+        try {
+            localStorage.setItem(themeStorageKey, theme);
+        } catch (error) {
+            // Ignore localStorage failures and keep the runtime theme active.
+        }
+    }
+
+    if (emit) {
+        window.dispatchEvent(new CustomEvent("kynesis:themechange", { detail: { theme } }));
+    }
+}
+
+syncThemeControls(getCurrentTheme());
+
+if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+        setTheme(getCurrentTheme() === "dark" ? "light" : "dark");
+    });
+}
+
+try {
+    if (!localStorage.getItem(themeStorageKey)) {
+        systemThemeQuery.addEventListener("change", (event) => {
+            setTheme(event.matches ? "dark" : "light", { persist: false });
+        });
+    }
+} catch (error) {
+    systemThemeQuery.addEventListener("change", (event) => {
+        setTheme(event.matches ? "dark" : "light", { persist: false });
+    });
+}
 
 function updateCursor(event) {
     pointerX = event.clientX;
@@ -63,40 +127,40 @@ if (!prefersReducedMotion && cursorShell && cursorDot && cursorRing) {
 
 const pagePhrases = {
     home: [
-        "initializing network shell...",
-        "mapping node mesh...",
-        "routing data packet...",
-        "stabilizing session..."
+        "exploring the studio...",
+        "curating the homepage...",
+        "arranging visual highlights...",
+        "setting the mood..."
     ],
     about: [
-        "loading system log...",
-        "reading architecture manifest...",
-        "tracing origin nodes...",
-        "indexing mission layer..."
+        "studio notes and philosophy...",
+        "reading the brand story...",
+        "framing the design point of view...",
+        "loading the journal..."
     ],
     services: [
-        "select service module...",
-        "enumerating capabilities...",
-        "binding command cards...",
-        "calibrating service graph..."
+        "discovering service highlights...",
+        "opening featured offerings...",
+        "browsing what we build...",
+        "collecting service details..."
     ],
     process: [
-        "running optimization pipeline...",
-        "sequencing architecture cycle...",
-        "validating output flow...",
-        "syncing support layer..."
+        "from brief to launch...",
+        "walking through the workflow...",
+        "shaping the delivery journey...",
+        "lining up the next step..."
     ],
     careers: [
-        "new data points welcomed...",
-        "opening careers portal...",
-        "aligning internship nodes...",
-        "priming intake channel..."
+        "opening the careers space...",
+        "highlighting opportunities...",
+        "welcoming future builders...",
+        "setting up applications..."
     ],
     contact: [
-        "preparing commit interface...",
-        "opening secure channel...",
-        "encrypting transmission layer...",
-        "awaiting message payload..."
+        "starting a private conversation...",
+        "opening the contact space...",
+        "waiting for your brief...",
+        "ready when you are..."
     ]
 };
 
@@ -300,6 +364,63 @@ if (form && formStatus) {
 
 const canvas = document.getElementById("heroCanvas");
 if (canvas && typeof THREE !== "undefined") {
+    const sceneThemes = {
+        light: {
+            fogColor: 0xf7f2ee,
+            fogDensity: 0.018,
+            ambientColor: 0xffffff,
+            ambientIntensity: 1.2,
+            keyLightColor: 0xff4f87,
+            keyLightIntensity: 1.4,
+            fillLightColor: 0xff8f57,
+            fillLightIntensity: 1,
+            rimLightColor: 0x49a6ff,
+            rimLightIntensity: 0.8,
+            filamentColor: 0xff8f57,
+            filamentOpacity: 0.52,
+            filamentSize: 0.14,
+            haloColor: 0xff4f87,
+            haloOpacity: 0.08,
+            lineColors: [0xff4f87, 0xff8f57, 0x49a6ff],
+            lineOpacity: 0.1,
+            spriteOpacity: 0.78,
+            orbPalettes: [
+                ["rgba(255,215,107,0.95)", "rgba(255,143,87,0.78)", "rgba(255,255,255,0.34)"],
+                ["rgba(255,79,135,0.95)", "rgba(124,92,255,0.72)", "rgba(255,255,255,0.34)"],
+                ["rgba(73,166,255,0.92)", "rgba(124,92,255,0.65)", "rgba(255,255,255,0.32)"],
+                ["rgba(255,255,255,0.98)", "rgba(255,79,135,0.28)", "rgba(255,255,255,0.28)"]
+            ]
+        },
+        dark: {
+            fogColor: 0x08090d,
+            fogDensity: 0.015,
+            ambientColor: 0xecf3ff,
+            ambientIntensity: 0.74,
+            keyLightColor: 0x7bdcff,
+            keyLightIntensity: 0.96,
+            fillLightColor: 0xd9e6ff,
+            fillLightIntensity: 0.78,
+            rimLightColor: 0x7daeff,
+            rimLightIntensity: 0.72,
+            filamentColor: 0x74ccff,
+            filamentOpacity: 0.42,
+            filamentSize: 0.15,
+            haloColor: 0xd9e6ff,
+            haloOpacity: 0.07,
+            lineColors: [0x67c5ff, 0xbcd4ff, 0x7daeff],
+            lineOpacity: 0.08,
+            spriteOpacity: 0.62,
+            orbPalettes: [
+                ["rgba(123,220,255,0.72)", "rgba(103,197,255,0.28)", "rgba(255,255,255,0.2)"],
+                ["rgba(217,230,255,0.66)", "rgba(125,174,255,0.24)", "rgba(255,255,255,0.2)"],
+                ["rgba(244,248,255,0.58)", "rgba(143,225,255,0.14)", "rgba(255,255,255,0.16)"],
+                ["rgba(125,174,255,0.56)", "rgba(103,197,255,0.18)", "rgba(255,255,255,0.18)"]
+            ]
+        }
+    };
+
+    const getSceneTheme = (themeName) => sceneThemes[themeName === "dark" ? "dark" : "light"];
+    const initialTheme = getSceneTheme(getCurrentTheme());
     const renderer = new THREE.WebGLRenderer({
         canvas,
         alpha: true,
@@ -309,21 +430,25 @@ if (canvas && typeof THREE !== "undefined") {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x000000, 0.015);
+    scene.fog = new THREE.FogExp2(initialTheme.fogColor, initialTheme.fogDensity);
 
     const camera = new THREE.PerspectiveCamera(54, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 0, 38);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+    const ambientLight = new THREE.AmbientLight(initialTheme.ambientColor, initialTheme.ambientIntensity);
     scene.add(ambientLight);
 
-    const platinumLight = new THREE.PointLight(0xffffff, 1.2, 120);
-    platinumLight.position.set(12, 10, 22);
-    scene.add(platinumLight);
+    const pinkLight = new THREE.PointLight(initialTheme.keyLightColor, initialTheme.keyLightIntensity, 120);
+    pinkLight.position.set(12, 10, 22);
+    scene.add(pinkLight);
 
-    const goldLight = new THREE.PointLight(0xc6a66a, 1, 100);
-    goldLight.position.set(-16, -10, 18);
-    scene.add(goldLight);
+    const warmLight = new THREE.PointLight(initialTheme.fillLightColor, initialTheme.fillLightIntensity, 100);
+    warmLight.position.set(-16, -10, 18);
+    scene.add(warmLight);
+
+    const coolLight = new THREE.PointLight(initialTheme.rimLightColor, initialTheme.rimLightIntensity, 90);
+    coolLight.position.set(0, 14, 16);
+    scene.add(coolLight);
 
     const cursorField = { x: 0, y: 0 };
     document.addEventListener("mousemove", (event) => {
@@ -331,8 +456,7 @@ if (canvas && typeof THREE !== "undefined") {
         cursorField.y = -(event.clientY / window.innerHeight) * 2 + 1;
     });
 
-    const tokenLabels = ["const", "map()", "node", "=>", "mesh", "if", "{ }", "< />", "scale", "sync"];
-    function createTokenTexture(label) {
+    function createOrbTexture(colors) {
         const size = 256;
         const textureCanvas = document.createElement("canvas");
         textureCanvas.width = size;
@@ -340,16 +464,20 @@ if (canvas && typeof THREE !== "undefined") {
         const ctx = textureCanvas.getContext("2d");
 
         ctx.clearRect(0, 0, size, size);
-        const gradient = ctx.createLinearGradient(0, 0, size, size);
-        gradient.addColorStop(0, "rgba(255,255,255,0.95)");
-        gradient.addColorStop(1, "rgba(198,166,106,0.9)");
+        const gradient = ctx.createRadialGradient(size * 0.42, size * 0.38, size * 0.08, size / 2, size / 2, size * 0.42);
+        gradient.addColorStop(0, colors[0]);
+        gradient.addColorStop(0.45, colors[1]);
+        gradient.addColorStop(1, "rgba(255,255,255,0)");
         ctx.fillStyle = gradient;
-        ctx.font = "500 72px IBM Plex Mono";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.shadowBlur = 18;
-        ctx.shadowColor = "rgba(255,255,255,0.45)";
-        ctx.fillText(label, size / 2, size / 2);
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size * 0.36, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = colors[2] || "rgba(255,255,255,0.34)";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size * 0.23, 0, Math.PI * 2);
+        ctx.stroke();
 
         const texture = new THREE.CanvasTexture(textureCanvas);
         texture.needsUpdate = true;
@@ -362,9 +490,9 @@ if (canvas && typeof THREE !== "undefined") {
     const spriteMeta = [];
     for (let index = 0; index < 22; index += 1) {
         const spriteMaterial = new THREE.SpriteMaterial({
-            map: createTokenTexture(tokenLabels[index % tokenLabels.length]),
+            map: createOrbTexture(initialTheme.orbPalettes[index % initialTheme.orbPalettes.length]),
             transparent: true,
-            opacity: 0.84,
+            opacity: initialTheme.spriteOpacity,
             depthWrite: false
         });
         const sprite = new THREE.Sprite(spriteMaterial);
@@ -398,10 +526,10 @@ if (canvas && typeof THREE !== "undefined") {
     const filamentGeometry = new THREE.BufferGeometry();
     filamentGeometry.setAttribute("position", new THREE.BufferAttribute(filamentPositions, 3));
     const filamentMaterial = new THREE.PointsMaterial({
-        color: 0xf4f5f8,
-        size: 0.12,
+        color: initialTheme.filamentColor,
+        size: initialTheme.filamentSize,
         transparent: true,
-        opacity: 0.9,
+        opacity: initialTheme.filamentOpacity,
         sizeAttenuation: true
     });
     const filamentCloud = new THREE.Points(filamentGeometry, filamentMaterial);
@@ -413,9 +541,9 @@ if (canvas && typeof THREE !== "undefined") {
         const positions = new Float32Array(6);
         geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
         const material = new THREE.LineBasicMaterial({
-            color: index % 2 === 0 ? 0xffffff : 0xc6a66a,
+            color: initialTheme.lineColors[index % initialTheme.lineColors.length],
             transparent: true,
-            opacity: 0.18
+            opacity: initialTheme.lineOpacity
         });
         const line = new THREE.Line(geometry, material);
         scene.add(line);
@@ -424,13 +552,57 @@ if (canvas && typeof THREE !== "undefined") {
 
     const haloGeometry = new THREE.TorusGeometry(11, 0.02, 18, 160);
     const haloMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
+        color: initialTheme.haloColor,
         transparent: true,
-        opacity: 0.12
+        opacity: initialTheme.haloOpacity
     });
     const halo = new THREE.Mesh(haloGeometry, haloMaterial);
     halo.rotation.x = Math.PI / 2.7;
     scene.add(halo);
+
+    function applySceneTheme(themeName) {
+        const theme = getSceneTheme(themeName);
+
+        scene.fog.color.setHex(theme.fogColor);
+        scene.fog.density = theme.fogDensity;
+
+        ambientLight.color.setHex(theme.ambientColor);
+        ambientLight.intensity = theme.ambientIntensity;
+
+        pinkLight.color.setHex(theme.keyLightColor);
+        pinkLight.intensity = theme.keyLightIntensity;
+
+        warmLight.color.setHex(theme.fillLightColor);
+        warmLight.intensity = theme.fillLightIntensity;
+
+        coolLight.color.setHex(theme.rimLightColor);
+        coolLight.intensity = theme.rimLightIntensity;
+
+        filamentMaterial.color.setHex(theme.filamentColor);
+        filamentMaterial.opacity = theme.filamentOpacity;
+        filamentMaterial.size = theme.filamentSize;
+
+        haloMaterial.color.setHex(theme.haloColor);
+        haloMaterial.opacity = theme.haloOpacity;
+
+        lineSegments.forEach((line, index) => {
+            line.material.color.setHex(theme.lineColors[index % theme.lineColors.length]);
+            line.material.opacity = theme.lineOpacity;
+        });
+
+        spriteMeta.forEach((meta, index) => {
+            const spriteTheme = theme.orbPalettes[index % theme.orbPalettes.length];
+            if (meta.sprite.material.map) {
+                meta.sprite.material.map.dispose();
+            }
+            meta.sprite.material.map = createOrbTexture(spriteTheme);
+            meta.sprite.material.opacity = theme.spriteOpacity;
+            meta.sprite.material.needsUpdate = true;
+        });
+    }
+
+    applySceneTheme(getCurrentTheme());
+    window.addEventListener("kynesis:themechange", (event) => applySceneTheme(event.detail.theme));
 
     function updateFilaments(time) {
         const positions = filamentGeometry.attributes.position.array;
@@ -467,7 +639,7 @@ if (canvas && typeof THREE !== "undefined") {
     function animateScene(time) {
         const timeFactor = time * 0.001;
         syntaxGroup.rotation.y = timeFactor * 0.12;
-        syntaxGroup.rotation.x = Math.sin(timeFactor * 0.2) * 0.08;
+        syntaxGroup.rotation.x = Math.sin(timeFactor * 0.18) * 0.05;
         halo.rotation.z = timeFactor * 0.08;
 
         spriteMeta.forEach((meta, index) => {
@@ -480,13 +652,15 @@ if (canvas && typeof THREE !== "undefined") {
         });
 
         updateFilaments(time);
-        platinumLight.position.x = 12 + cursorField.x * 8;
-        platinumLight.position.y = 10 + cursorField.y * 6;
-        goldLight.position.x = -16 + cursorField.x * -5;
-        goldLight.position.y = -10 + cursorField.y * -4;
+        pinkLight.position.x = 12 + cursorField.x * 6;
+        pinkLight.position.y = 10 + cursorField.y * 4;
+        warmLight.position.x = -16 + cursorField.x * -4;
+        warmLight.position.y = -10 + cursorField.y * -3;
+        coolLight.position.x = cursorField.x * 5;
+        coolLight.position.y = 14 + cursorField.y * 3;
 
-        camera.position.x += ((cursorField.x * 2.2) - camera.position.x) * 0.02;
-        camera.position.y += ((cursorField.y * 1.4) - camera.position.y) * 0.02;
+        camera.position.x += ((cursorField.x * 1.4) - camera.position.x) * 0.02;
+        camera.position.y += ((cursorField.y * 1.1) - camera.position.y) * 0.02;
         camera.lookAt(scene.position);
 
         renderer.render(scene, camera);

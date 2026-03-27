@@ -5,9 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kynesis Developers | The Architecture Cycle</title>
     <meta name="description" content="See how Kynesis Developers transforms requirements into deployed systems through a structured architecture cycle.">
+    <meta name="theme-color" content="#fff9f4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (() => {
+            try {
+                const storedTheme = localStorage.getItem("kynesis-theme");
+                const theme = storedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+                document.documentElement.dataset.theme = theme;
+            } catch (error) {
+                document.documentElement.dataset.theme = "light";
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="Atmosphere.css">
 </head>
 <body data-page="process">
@@ -15,22 +27,23 @@
     <div class="noise-layer" aria-hidden="true"></div>
     <div class="cursor-shell" aria-hidden="true"><div class="cursor-dot"></div><div class="cursor-ring"></div></div>
     <div class="command-menu-shell">
-        <button class="command-toggle magnetic" id="commandToggle" type="button" aria-expanded="false" aria-controls="commandPanel"><span class="command-toggle-label">/open</span><span class="command-toggle-caption">Command Menu</span></button>
+        <button class="command-toggle magnetic" id="commandToggle" type="button" aria-expanded="false" aria-controls="commandPanel"><span class="command-toggle-label">Menu</span><span class="command-toggle-caption">Explore Site</span></button>
         <aside class="command-panel" id="commandPanel" aria-hidden="true">
-            <div class="command-panel-bar"><span class="prompt-sigil">root@kynesis:~/cycle</span><span class="typing-stream" id="typingStream">running optimization pipeline...</span></div>
+            <div class="command-panel-bar"><span class="prompt-sigil">Kynesis Navigation</span><span class="typing-stream" id="typingStream">from brief to launch...</span></div>
             <nav class="command-nav">
-                <a class="magnetic" href="index.html">./home</a>
-                <a class="magnetic" href="about.html">./about</a>
-                <a class="magnetic" href="services.html">./services</a>
-                <a class="magnetic" href="process.html">./process</a>
-                <a class="magnetic" href="careers.html">./careers</a>
-                <a class="magnetic" href="contact.html">./contact</a>
+                <a class="magnetic" href="index.html">Home</a>
+                <a class="magnetic" href="about.html">About</a>
+                <a class="magnetic" href="services.html">Services</a>
+                <a class="magnetic" href="process.html">Process</a>
+                <a class="magnetic" href="careers.html">Careers</a>
+                <a class="magnetic" href="contact.html">Contact</a>
             </nav>
         </aside>
     </div>
     <header class="topbar">
-        <a class="brand magnetic" href="index.html"><span class="brand-mark"></span><span class="brand-copy"><strong>Kynesis Developers</strong><small>The Architect of Logic</small></span></a>
-        <div class="topbar-meta"><span>Process Mesh</span><span>5-step cycle</span></div>
+        <a class="brand magnetic" href="index.html" aria-label="Kynesis Devloper home"><span class="brand-text"><strong class="brand-title">Kynesis Devloper</strong></span></a>
+        <div class="topbar-meta"><span>Delivery Journey</span><span>Design to Launch</span></div>
+        <button class="theme-toggle magnetic" id="themeToggle" type="button" aria-label="Switch theme" aria-pressed="false"><span class="theme-toggle-dot" aria-hidden="true"></span><span class="theme-toggle-label">Theme</span><span class="theme-toggle-value" id="themeToggleValue">Dark Mode</span></button>
     </header>
     <main>
         <section class="page-shell">
@@ -39,7 +52,7 @@
                 <div class="hero-vignette"></div>
             </div>
             <section class="page-header reveal">
-                <p class="eyebrow">ROOT@KYNESIS:~/cycle$ RUNNING OPTIMIZATION PIPELINE...</p>
+                <p class="eyebrow">How ideas become launch-ready systems</p>
                 <h1>The Architecture Cycle.</h1>
             </section>
             <section class="process-track reveal">
